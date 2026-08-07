@@ -1,254 +1,615 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>African Buffalo Lobby</title>
 
 <style>
+*{
+    box-sizing:border-box;
+}
+
 body{
-margin:0;
-background:#12001f;
-color:white;
-font-family:Arial;
-text-align:center;
+    margin:0;
+    background:#100018;
+    color:white;
+    font-family:Arial,sans-serif;
+    text-align:center;
 }
 
 .header{
-background:#800000;
-padding:18px;
-font-size:28px;
-font-weight:bold;
-color:#ffd700;
+    background:#700000;
+    color:#ffd900;
+    padding:18px 10px;
+    font-size:25px;
+    font-weight:bold;
+    border-bottom:3px solid #ffd900;
 }
 
-.card{
-margin:12px;
-padding:20px;
-background:#350050;
-border:3px solid gold;
-border-radius:15px;
+.title{
+    padding:18px 10px;
+    font-size:22px;
+    font-weight:bold;
 }
 
 button{
-background:#ffd700;
-border:0;
-padding:10px 25px;
-border-radius:10px;
-font-weight:bold;
+    border:0;
+    background:#ffd900;
+    color:#260000;
+    font-weight:bold;
+    border-radius:8px;
+    padding:12px 20px;
+    cursor:pointer;
 }
 
-.hidden{
-display:none;
+button:active{
+    transform:scale(.96);
+}
+
+/* LOBBY */
+
+#lobby{
+    display:block;
 }
 
 .room{
-margin:10px;
-padding:25px;
-background:#400060;
-border:2px solid gold;
-border-radius:15px;
+    margin:10px;
+    padding:18px;
+    border:3px solid #ffd900;
+    border-radius:14px;
+    background:#300050;
 }
 
-.seat{
-display:inline-block;
-width:130px;
-height:100px;
-margin:8px;
-padding-top:20px;
-background:#250035;
-border:3px solid gold;
-border-radius:15px;
+.room-name{
+    font-size:18px;
+    color:#fff;
+    margin-bottom:10px;
 }
 
-.empty{
-color:#aaa;
+/* ROOM */
+
+#roomPage{
+    display:none;
 }
 
-.full{
-color:#00ff00;
+.room-title{
+    background:#21002f;
+    color:white;
+    padding:15px;
+    font-size:22px;
+    font-weight:bold;
 }
 
+.chair{
+    margin:12px 6px;
+    min-height:145px;
+    padding:10px;
+    border:3px solid #ffd900;
+    border-radius:14px;
+    background:#300050;
+    position:relative;
+    overflow:hidden;
+}
+
+.chair-number{
+    font-weight:bold;
+    color:#ffd900;
+    font-size:16px;
+    margin-bottom:5px;
+}
+
+/* EMPTY CHAIR */
+
+.empty-chair{
+    padding:12px;
+}
+
+.empty-icon{
+    font-size:35px;
+    margin:5px;
+}
+
+.status{
+    font-size:13px;
+    color:#aaa;
+    margin:5px;
+}
+
+/* OCCUPIED CHAIR */
+
+.occupied{
+    min-height:220px;
+}
+
+.girl{
+    width:110px;
+    height:145px;
+    object-fit:cover;
+    border-radius:12px;
+    border:3px solid #ffd900;
+    display:block;
+    margin:5px auto;
+}
+
+.player{
+    color:#7cff00;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.leave{
+    background:#ff3b30;
+    color:white;
+    margin-top:5px;
+    padding:8px 15px;
+}
+
+/* PAGE BUTTONS */
+
+.pages{
+    margin:20px 5px;
+}
+
+.page-title{
+    color:#ffd900;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.page-btn{
+    padding:9px 13px;
+    margin:3px;
+}
+
+.back{
+    margin-top:12px;
+    background:#ffd900;
+}
+
+/* HIDDEN */
+
+.hidden{
+    display:none !important;
+}
 </style>
 </head>
 
 <body>
 
 <div class="header">
-🐃 AFRICAN BUFFALO
+    🐃 AFRICAN BUFFALO
 </div>
 
+
+<!-- =========================
+     LOBBY
+========================= -->
 
 <div id="lobby">
 
-<h3>ROOM LIST</h3>
+    <div class="title">
+        ROOM LOBBY
+    </div>
 
-<div class="room">
-ROOM 1<br>
-<button onclick="openRoom(1)">ENTER</button>
-</div>
-
-<div class="room">
-ROOM 2<br>
-<button onclick="openRoom(2)">ENTER</button>
-</div>
-
-<div class="room">
-ROOM 3<br>
-<button onclick="openRoom(3)">ENTER</button>
-</div>
-
-<div class="room">
-ROOM 4<br>
-<button onclick="openRoom(4)">ENTER</button>
-</div>
-
-<div class="room">
-ROOM 5<br>
-<button onclick="openRoom(5)">ENTER</button>
-</div>
-
-<div class="room">
-ROOM 6<br>
-<button onclick="openRoom(6)">ENTER</button>
-</div>
-
-<div class="room">
-ROOM 7<br>
-<button onclick="openRoom(7)">ENTER</button>
-</div>
-
-<div class="room">
-ROOM 8<br>
-<button onclick="openRoom(8)">ENTER</button>
-</div>
-
-<div class="room">
-ROOM 9<br>
-<button onclick="openRoom(9)">ENTER</button>
-</div>
-
-<div class="room">
-ROOM 10<br>
-<button onclick="openRoom(10)">ENTER</button>
-</div>
+    <div id="roomList"></div>
 
 </div>
 
 
-<div id="roomPage" class="hidden">
+<!-- =========================
+     ROOM PAGE
+========================= -->
 
-<h3 id="roomTitle"></h3>
+<div id="roomPage">
 
-<div id="chairs"></div>
+    <div class="room-title">
+        🐃 AFRICAN BUFFALO
+        <br>
+        <span id="roomTitle">ROOM 1</span>
+    </div>
 
-<div>
-PAGE
-<br><br>
-<button>1/4</button>
-<button>2/4</button>
-<button>3/4</button>
-<button>4/4</button>
-</div>
+    <div id="chairList"></div>
 
-<br>
+    <div class="pages">
 
-<button onclick="back()">BACK</button>
+        <div class="page-title">
+            PAGE
+        </div>
 
-</div><div id="roomPage" class="hidden">
+        <button class="page-btn" onclick="changePage(1)">
+            1/4
+        </button>
 
-<h3 id="roomTitle"></h3>
+        <button class="page-btn" onclick="changePage(2)">
+            2/4
+        </button>
 
-<div id="chairs"></div>
+        <button class="page-btn" onclick="changePage(3)">
+            3/4
+        </button>
 
-<br>
+        <button class="page-btn" onclick="changePage(4)">
+            4/4
+        </button>
 
-<button onclick="back()">BACK</button>
+        <br>
+
+        <button class="back" onclick="backLobby()">
+            BACK
+        </button>
+
+    </div>
 
 </div>
 
 
 <script>
 
-let seats = [
-false,
-false,
-false,
-false
-];
+/* =========================
+   GAME SETTINGS
+========================= */
+
+const ROOM_COUNT = 10;
+const CHAIRS_PER_PAGE = 4;
+const PAGE_COUNT = 4;
 
 
-function openRoom(number){
+/*
+    girl1.png
+    girl2.png
+    girl3.png
+    girl4.png
 
-document.getElementById("lobby").classList.add("hidden");
-
-document.getElementById("roomPage").classList.remove("hidden");
-
-document.getElementById("roomTitle").innerHTML =
-"ROOM "+number;
+    These files must be in the same folder
+    as index.html.
+*/
 
 
-showChairs();
+/* =========================
+   GAME DATA
+========================= */
+
+let currentRoom = 1;
+let currentPage = 1;
+
+
+/*
+    Load saved chair data.
+    Every room has 16 chairs.
+*/
+
+let players = JSON.parse(
+    localStorage.getItem("buffaloPlayers") || "{}"
+);
+
+
+/* =========================
+   SAVE DATA
+========================= */
+
+function savePlayers(){
+
+    localStorage.setItem(
+        "buffaloPlayers",
+        JSON.stringify(players)
+    );
 
 }
 
 
+/* =========================
+   CREATE LOBBY
+========================= */
+
+function createLobby(){
+
+    const list =
+        document.getElementById("roomList");
+
+    list.innerHTML = "";
+
+    for(let i=1;i<=ROOM_COUNT;i++){
+
+        const box =
+            document.createElement("div");
+
+        box.className = "room";
+
+        box.innerHTML = `
+            <div class="room-name">
+                ROOM ${i}
+            </div>
+
+            <button onclick="openRoom(${i})">
+                ENTER
+            </button>
+        `;
+
+        list.appendChild(box);
+
+    }
+
+}
+
+
+/* =========================
+   OPEN ROOM
+========================= */
+
+function openRoom(room){
+
+    currentRoom = room;
+    currentPage = 1;
+
+    document.getElementById("lobby")
+        .style.display = "none";
+
+    document.getElementById("roomPage")
+        .style.display = "block";
+
+    document.getElementById("roomTitle")
+        .textContent = "ROOM " + room;
+
+    showChairs();
+
+}
+
+
+/* =========================
+   SHOW CHAIRS
+========================= */
 
 function showChairs(){
 
-let box=document.getElementById("chairs");
+    const list =
+        document.getElementById("chairList");
 
-box.innerHTML="";
-
-
-for(let i=0;i<4;i++){
-
-let status = seats[i]
-? '<img src="images/girl3d.png" width="80"><br>PLAYER'
-: "🪑 EMPTY";
+    list.innerHTML = "";
 
 
-box.innerHTML +=
+    /*
+        Each page contains 4 chairs.
+        Page 1 = chairs 1-4
+        Page 2 = chairs 5-8
+        Page 3 = chairs 9-12
+        Page 4 = chairs 13-16
+    */
 
-`
-<div class="seat" onclick="sit(${i})">
+    const start =
+        (currentPage - 1) * CHAIRS_PER_PAGE + 1;
 
-${status}
 
-<br><br>
+    for(
+        let i=start;
+        i<start + CHAIRS_PER_PAGE;
+        i++
+    ){
 
-<button>
-SIT
-</button>
+        createChair(list,i);
 
-</div>
-`;
-
-}
+    }
 
 }
 
 
+/* =========================
+   CREATE CHAIR
+========================= */
 
-function sit(id){
+function createChair(list,chairNumber){
 
-seats[id]=true;
+    const key =
+        "room" +
+        currentRoom +
+        "_chair" +
+        chairNumber;
 
-showChairs();
+
+    const data =
+        players[key];
+
+
+    const box =
+        document.createElement("div");
+
+    box.className = "chair";
+
+
+    /* =====================
+       EMPTY CHAIR
+    ===================== */
+
+    if(!data){
+
+        box.innerHTML = `
+
+            <div class="chair-number">
+                🪑 CHAIR ${chairNumber}
+            </div>
+
+            <div class="empty-chair">
+
+                <div class="empty-icon">
+                    🪑
+                </div>
+
+                <div class="status">
+                    EMPTY
+                </div>
+
+                <button onclick="sitChair(${chairNumber})">
+                    SIT
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* =====================
+       OCCUPIED CHAIR
+    ===================== */
+
+    else{
+
+        box.classList.add("occupied");
+
+        const girlNumber =
+            ((chairNumber - 1) % 4) + 1;
+
+
+        box.innerHTML = `
+
+            <div class="chair-number">
+                🪑 CHAIR ${chairNumber}
+            </div>
+
+            <img
+                class="girl"
+                src="girl${girlNumber}.png"
+                alt="Player"
+            >
+
+            <div class="player">
+                👤 PLAYER ${data.player}
+            </div>
+
+            <div class="status">
+                OCCUPIED
+            </div>
+
+            <button
+                class="leave"
+                onclick="leaveChair(${chairNumber})"
+            >
+                LEAVE
+            </button>
+
+        `;
+
+    }
+
+
+    list.appendChild(box);
 
 }
 
 
+/* =========================
+   SIT
+========================= */
 
-function back(){
+function sitChair(chairNumber){
 
-document.getElementById("roomPage").classList.add("hidden");
+    const playerName =
+        prompt("Enter player name");
 
-document.getElementById("lobby").classList.remove("hidden");
+
+    if(
+        playerName === null ||
+        playerName.trim() === ""
+    ){
+        return;
+    }
+
+
+    const key =
+        "room" +
+        currentRoom +
+        "_chair" +
+        chairNumber;
+
+
+    /*
+        If someone is already sitting,
+        don't replace them.
+    */
+
+    if(players[key]){
+
+        alert("This chair is already occupied.");
+
+        return;
+    }
+
+
+    players[key] = {
+
+        player: playerName.trim(),
+
+        time: Date.now()
+
+    };
+
+
+    savePlayers();
+
+    showChairs();
 
 }
 
+
+/* =========================
+   LEAVE
+========================= */
+
+function leaveChair(chairNumber){
+
+    const key =
+        "room" +
+        currentRoom +
+        "_chair" +
+        chairNumber;
+
+
+    delete players[key];
+
+    savePlayers();
+
+    showChairs();
+
+}
+
+
+/* =========================
+   CHANGE PAGE
+========================= */
+
+function changePage(page){
+
+    currentPage = page;
+
+    showChairs();
+
+}
+
+
+/* =========================
+   BACK TO LOBBY
+========================= */
+
+function backLobby(){
+
+    document.getElementById("roomPage")
+        .style.display = "none";
+
+    document.getElementById("lobby")
+        .style.display = "block";
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+createLobby();
 
 </script>
-
 
 </body>
 </html>
