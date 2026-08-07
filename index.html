@@ -1,130 +1,232 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>8090</title>
+<title>African Buffalo Lobby</title>
 
 <style>
 body{
-    margin:0;
-    background:#100018;
-    font-family:Arial;
-    color:white;
+ margin:0;
+ background:#140020;
+ color:white;
+ font-family:Arial;
+ text-align:center;
 }
 
-.top{
-    background:linear-gradient(#8b0000,#300000);
-    padding:20px;
-    text-align:center;
-    font-size:32px;
-    font-weight:bold;
-    color:#ffd700;
-    box-shadow:0 0 20px #ffcc00;
+.header{
+ background:#700000;
+ padding:20px;
+ color:#ffd900;
+ font-size:30px;
+ font-weight:bold;
 }
 
-.coin{
-    background:#241000;
-    margin:15px;
-    padding:12px;
-    border-radius:15px;
-    color:#ffd700;
-    text-align:center;
-    font-size:20px;
-}
-
-.lobby{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:15px;
-    padding:15px;
-}
-
-.card{
-    height:180px;
-    background:linear-gradient(#4b0082,#160020);
-    border:3px solid #ffd700;
-    border-radius:20px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    box-shadow:0 0 15px #ffd700;
-}
-
-.card h2{
-    color:#ffd700;
-}
-
-.buffalo{
-    background:linear-gradient(#8b0000,#3a0000);
+.box{
+ margin:15px;
+ padding:20px;
+ background:#300050;
+ border:3px solid gold;
+ border-radius:15px;
 }
 
 button{
-    background:#ffd700;
-    border:0;
-    padding:10px 25px;
-    border-radius:20px;
-    font-size:18px;
+ background:#ffd900;
+ border:0;
+ padding:12px 20px;
+ margin:5px;
+ border-radius:10px;
+ font-weight:bold;
 }
 
+.chair{
+ background:#6500a8;
+ color:white;
+ border:2px solid gold;
+}
+
+.hide{
+ display:none;
+}
+
+.card{
+ width:90%;
+ margin:20px auto;
+ border:5px solid purple;
+ border-radius:20px;
+ overflow:hidden;
+}
+
+.card img{
+ width:100%;
+}
 </style>
 
 </head>
 
 <body>
 
-<div class="top">
-8090
+
+<div class="header">
+🐃 AFRICAN BUFFALO
 </div>
 
 
-<div class="coin">
-💰 Coin : 10000
+<!-- MAIN LOBBY -->
+
+<div id="lobby">
+
+<div class="card">
+<img src="buffalo.jpg">
 </div>
 
-
-<div class="lobby">
-
-
-<div class="card buffalo">
-
-<h2>🐃</h2>
-<h2>AFRICAN BUFFALO</h2>
-
-<button>
-PLAY
+<button onclick="showRooms()">
+ENTER LOBBY
 </button>
 
 </div>
 
 
-<div class="card">
 
-<h2>🐉</h2>
-<h2>DRAGON</h2>
+<!-- ROOM LIST -->
 
-</div>
+<div id="rooms" class="hide">
 
+<h2>ROOM LIST</h2>
 
-<div class="card">
-
-<h2>🏴‍☠️</h2>
-<h2>PIRATE</h2>
+<div id="roomBox"></div>
 
 </div>
 
 
-<div class="card">
 
-<h2>🐯</h2>
-<h2>TIGER</h2>
+<!-- CHAIRS -->
+
+<div id="chairs" class="hide">
+
+<h2 id="roomTitle"></h2>
+
+<div id="chairBox"></div>
+
+
+<h3>PAGE</h3>
+
+<button onclick="page(1)">1/4</button>
+<button onclick="page(2)">2/4</button>
+<button onclick="page(3)">3/4</button>
+<button onclick="page(4)">4/4</button>
+
+
+<br>
+
+<button onclick="backRoom()">BACK</button>
 
 </div>
 
 
+
+<script>
+
+
+let roomBox=document.getElementById("roomBox");
+
+
+for(let i=1;i<=10;i++){
+
+roomBox.innerHTML +=
+
+`
+<div class="box">
+
+ROOM ${i}
+
+<br>
+
+<button onclick="openRoom(${i})">
+ENTER
+</button>
+
 </div>
+`;
+
+}
+
+
+
+function showRooms(){
+
+document.getElementById("lobby").style.display="none";
+
+document.getElementById("rooms").style.display="block";
+
+}
+
+
+
+function openRoom(r){
+
+document.getElementById("rooms").style.display="none";
+
+document.getElementById("chairs").style.display="block";
+
+
+document.getElementById("roomTitle").innerHTML=
+"ROOM "+r;
+
+
+showChairs();
+
+}
+
+
+
+function showChairs(){
+
+let c=document.getElementById("chairBox");
+
+c.innerHTML="";
+
+
+for(let i=1;i<=4;i++){
+
+c.innerHTML +=
+
+`
+<div class="box">
+
+🪑 CHAIR ${i}
+
+<br>
+
+<button>
+SIT
+</button>
+
+</div>
+`;
+
+}
+
+}
+
+
+
+function page(n){
+
+alert("Page "+n+" / 4");
+
+}
+
+
+
+function backRoom(){
+
+document.getElementById("chairs").style.display="none";
+
+document.getElementById("rooms").style.display="block";
+
+}
+
+
+</script>
 
 
 </body>
