@@ -5,66 +5,66 @@
 
 <style>
 body{
- margin:0;
- background:#12001f;
- color:white;
- font-family:Arial;
- text-align:center;
+margin:0;
+background:#12001f;
+color:white;
+font-family:Arial;
+text-align:center;
 }
 
 .header{
- background:#800000;
- padding:20px;
- color:#ffd700;
- font-size:28px;
- font-weight:bold;
+background:#800000;
+padding:18px;
+font-size:28px;
+font-weight:bold;
+color:#ffd700;
 }
 
-.box{
- margin:15px;
- padding:20px;
- background:#300050;
- border:3px solid gold;
- border-radius:15px;
+.card{
+margin:12px;
+padding:20px;
+background:#350050;
+border:3px solid gold;
+border-radius:15px;
 }
 
 button{
- background:#ffd700;
- border:none;
- padding:10px 25px;
- border-radius:10px;
- font-weight:bold;
-}
-
-.room{
- margin:10px;
- padding:25px;
- border:2px solid gold;
- border-radius:15px;
- background:#400060;
-}
-
-.seat{
- display:inline-block;
- width:120px;
- height:120px;
- margin:10px;
- background:#250035;
- border:3px solid gold;
- border-radius:15px;
- padding-top:20px;
-}
-
-.online{
- color:#00ff00;
-}
-
-.empty{
- color:#aaa;
+background:#ffd700;
+border:0;
+padding:10px 25px;
+border-radius:10px;
+font-weight:bold;
 }
 
 .hidden{
- display:none;
+display:none;
+}
+
+.room{
+margin:10px;
+padding:25px;
+background:#400060;
+border:2px solid gold;
+border-radius:15px;
+}
+
+.seat{
+display:inline-block;
+width:130px;
+height:100px;
+margin:8px;
+padding-top:20px;
+background:#250035;
+border:3px solid gold;
+border-radius:15px;
+}
+
+.empty{
+color:#aaa;
+}
+
+.full{
+color:#00ff00;
 }
 
 </style>
@@ -76,63 +76,99 @@ button{
 🐃 AFRICAN BUFFALO
 </div>
 
+
 <div id="lobby">
+
 <h3>ROOM LIST</h3>
 
 <div class="room">
 ROOM 1<br>
-<button onclick="openRoom()">ENTER</button>
+<button onclick="openRoom(1)">ENTER</button>
 </div>
 
 <div class="room">
 ROOM 2<br>
-<button onclick="openRoom()">ENTER</button>
+<button onclick="openRoom(2)">ENTER</button>
 </div>
 
 <div class="room">
 ROOM 3<br>
-<button onclick="openRoom()">ENTER</button>
+<button onclick="openRoom(3)">ENTER</button>
 </div>
 
 <div class="room">
 ROOM 4<br>
-<button onclick="openRoom()">ENTER</button>
+<button onclick="openRoom(4)">ENTER</button>
 </div>
 
-</div><div id="room" class="hidden">
-
-<h3>ROOM 1 - CHAIRS</h3>
-
-<div class="seat" onclick="sit(0)">
-🪑<br>
-<span id="s0" class="empty">EMPTY</span>
+<div class="room">
+ROOM 5<br>
+<button onclick="openRoom(5)">ENTER</button>
 </div>
 
-<div class="seat" onclick="sit(1)">
-🪑<br>
-<span id="s1" class="empty">EMPTY</span>
+<div class="room">
+ROOM 6<br>
+<button onclick="openRoom(6)">ENTER</button>
 </div>
 
-<div class="seat" onclick="sit(2)">
-🪑<br>
-<span id="s2" class="empty">EMPTY</span>
+<div class="room">
+ROOM 7<br>
+<button onclick="openRoom(7)">ENTER</button>
 </div>
 
-<div class="seat" onclick="sit(3)">
-🪑<br>
-<span id="s3" class="empty">EMPTY</span>
+<div class="room">
+ROOM 8<br>
+<button onclick="openRoom(8)">ENTER</button>
 </div>
 
+<div class="room">
+ROOM 9<br>
+<button onclick="openRoom(9)">ENTER</button>
+</div>
+
+<div class="room">
+ROOM 10<br>
+<button onclick="openRoom(10)">ENTER</button>
+</div>
+
+</div>
+
+
+<div id="roomPage" class="hidden">
+
+<h3 id="roomTitle"></h3>
+
+<div id="chairs"></div>
+
+<div>
+PAGE
 <br><br>
+<button>1/4</button>
+<button>2/4</button>
+<button>3/4</button>
+<button>4/4</button>
+</div>
 
-<button onclick="backLobby()">BACK</button>
+<br>
+
+<button onclick="back()">BACK</button>
+
+</div><div id="roomPage" class="hidden">
+
+<h3 id="roomTitle"></h3>
+
+<div id="chairs"></div>
+
+<br>
+
+<button onclick="back()">BACK</button>
 
 </div>
 
 
 <script>
 
-let seats=[
+let seats = [
 false,
 false,
 false,
@@ -140,11 +176,54 @@ false
 ];
 
 
-function openRoom(){
+function openRoom(number){
 
 document.getElementById("lobby").classList.add("hidden");
 
-document.getElementById("room").classList.remove("hidden");
+document.getElementById("roomPage").classList.remove("hidden");
+
+document.getElementById("roomTitle").innerHTML =
+"ROOM "+number;
+
+
+showChairs();
+
+}
+
+
+
+function showChairs(){
+
+let box=document.getElementById("chairs");
+
+box.innerHTML="";
+
+
+for(let i=0;i<4;i++){
+
+let status =
+seats[i] 
+? "👩 PLAYER"
+: "🪑 EMPTY";
+
+
+box.innerHTML +=
+
+`
+<div class="seat" onclick="sit(${i})">
+
+${status}
+
+<br><br>
+
+<button>
+SIT
+</button>
+
+</div>
+`;
+
+}
 
 }
 
@@ -152,33 +231,22 @@ document.getElementById("room").classList.remove("hidden");
 
 function sit(id){
 
-if(seats[id]==false){
-
 seats[id]=true;
 
-document.getElementById("s"+id).innerHTML="👤 PLAYER";
-
-document.getElementById("s"+id).className="online";
-
-}
-
-else{
-
-alert("ဒီခုံမှာ လူရှိပြီးသား");
-
-}
+showChairs();
 
 }
 
 
 
-function backLobby(){
+function back(){
 
-document.getElementById("room").classList.add("hidden");
+document.getElementById("roomPage").classList.add("hidden");
 
 document.getElementById("lobby").classList.remove("hidden");
 
 }
+
 
 </script>
 
