@@ -1,70 +1,131 @@
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>8090 Buffalo</title>
+
+<title>8090</title>
+
 <style>
 body{
-  margin:0;
-  background:#12001f;
-  color:white;
-  font-family:sans-serif;
-  text-align:center;
+    margin:0;
+    background:#100018;
+    font-family:Arial;
+    color:white;
 }
-.header{
-  background:#5b0000;
-  padding:20px;
-  font-size:28px;
-  color:#ffd700;
+
+.top{
+    background:linear-gradient(#8b0000,#300000);
+    padding:20px;
+    text-align:center;
+    font-size:32px;
+    font-weight:bold;
+    color:#ffd700;
+    box-shadow:0 0 20px #ffcc00;
 }
-.room{
-  margin:20px;
-  padding:20px;
-  background:#260044;
-  border-radius:15px;
+
+.coin{
+    background:#241000;
+    margin:15px;
+    padding:12px;
+    border-radius:15px;
+    color:#ffd700;
+    text-align:center;
+    font-size:20px;
 }
+
+.lobby{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    padding:15px;
+}
+
+.card{
+    height:180px;
+    background:linear-gradient(#4b0082,#160020);
+    border:3px solid #ffd700;
+    border-radius:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    box-shadow:0 0 15px #ffd700;
+}
+
+.card h2{
+    color:#ffd700;
+}
+
+.buffalo{
+    background:linear-gradient(#8b0000,#3a0000);
+}
+
 button{
-  background:#ffcc00;
-  border:0;
-  padding:15px 30px;
-  border-radius:10px;
-  font-size:20px;
+    background:#ffd700;
+    border:0;
+    padding:10px 25px;
+    border-radius:20px;
+    font-size:18px;
 }
-.chairs{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-  margin-top:20px;
-}
-.chair{
-  background:#7b2cff;
-  padding:20px 5px;
-  border-radius:10px;
-}
+
 </style>
+
 </head>
 
 <body>
 
-<div class="header">
-8090 BUFFALO
+<div class="top">
+8090
 </div>
 
-<div class="room">
-<h2>Room 1</h2>
-<p>Section 1</p>
 
-<div class="chairs">
-<div class="chair">Chair 1</div>
-<div class="chair">Chair 2</div>
-<div class="chair">Chair 3</div>
-<div class="chair">Chair 4</div>
+<div class="coin">
+💰 Coin : 10000
 </div>
 
-<br>
-<button>PLAY</button>
+
+<div class="lobby">
+
+
+<div class="card buffalo">
+
+<h2>🐃</h2>
+<h2>AFRICAN BUFFALO</h2>
+
+<button>
+PLAY
+</button>
 
 </div>
+
+
+<div class="card">
+
+<h2>🐉</h2>
+<h2>DRAGON</h2>
+
+</div>
+
+
+<div class="card">
+
+<h2>🏴‍☠️</h2>
+<h2>PIRATE</h2>
+
+</div>
+
+
+<div class="card">
+
+<h2>🐯</h2>
+<h2>TIGER</h2>
+
+</div>
+
+
+</div>
+
 
 </body>
 </html>
