@@ -6,17 +6,17 @@
 <style>
 body{
  margin:0;
- background:#140020;
+ background:#12001f;
  color:white;
  font-family:Arial;
  text-align:center;
 }
 
 .header{
- background:#700000;
+ background:#800000;
  padding:20px;
- color:#ffd900;
- font-size:30px;
+ color:#ffd700;
+ font-size:28px;
  font-weight:bold;
 }
 
@@ -29,179 +29,142 @@ body{
 }
 
 button{
- background:#ffd900;
- border:0;
- padding:12px 20px;
- margin:5px;
+ background:#ffd700;
+ border:none;
+ padding:10px 25px;
  border-radius:10px;
  font-weight:bold;
 }
 
-.chair{
- background:#6500a8;
- color:white;
+.room{
+ margin:10px;
+ padding:25px;
  border:2px solid gold;
+ border-radius:15px;
+ background:#400060;
 }
 
-.hide{
+.seat{
+ display:inline-block;
+ width:120px;
+ height:120px;
+ margin:10px;
+ background:#250035;
+ border:3px solid gold;
+ border-radius:15px;
+ padding-top:20px;
+}
+
+.online{
+ color:#00ff00;
+}
+
+.empty{
+ color:#aaa;
+}
+
+.hidden{
  display:none;
 }
 
-.card{
- width:90%;
- margin:20px auto;
- border:5px solid purple;
- border-radius:20px;
- overflow:hidden;
-}
-
-.card img{
- width:100%;
-}
 </style>
-
 </head>
 
 <body>
-
 
 <div class="header">
 🐃 AFRICAN BUFFALO
 </div>
 
-
-<!-- MAIN LOBBY -->
-
 <div id="lobby">
+<h3>ROOM LIST</h3>
 
-<div class="card">
-<img src="buffalo.jpg">
+<div class="room">
+ROOM 1<br>
+<button onclick="openRoom()">ENTER</button>
 </div>
 
-<button onclick="showRooms()">
-ENTER LOBBY
-</button>
-
+<div class="room">
+ROOM 2<br>
+<button onclick="openRoom()">ENTER</button>
 </div>
 
-
-
-<!-- ROOM LIST -->
-
-<div id="rooms" class="hide">
-
-<h2>ROOM LIST</h2>
-
-<div id="roomBox"></div>
-
+<div class="room">
+ROOM 3<br>
+<button onclick="openRoom()">ENTER</button>
 </div>
 
-
-
-<!-- CHAIRS -->
-
-<div id="chairs" class="hide">
-
-<h2 id="roomTitle"></h2>
-
-<div id="chairBox"></div>
-
-
-<h3>PAGE</h3>
-
-<button onclick="page(1)">1/4</button>
-<button onclick="page(2)">2/4</button>
-<button onclick="page(3)">3/4</button>
-<button onclick="page(4)">4/4</button>
-
-
-<br>
-
-<button onclick="backRoom()">BACK</button>
-
+<div class="room">
+ROOM 4<br>
+<button onclick="openRoom()">ENTER</button>
 </div>
 
+</div><div id="room" class="hidden">
+
+<h3>ROOM 1 - CHAIRS</h3>
+
+<div class="seat" onclick="sit(0)">
+🪑<br>
+<span id="s0" class="empty">EMPTY</span>
+</div>
+
+<div class="seat" onclick="sit(1)">
+🪑<br>
+<span id="s1" class="empty">EMPTY</span>
+</div>
+
+<div class="seat" onclick="sit(2)">
+🪑<br>
+<span id="s2" class="empty">EMPTY</span>
+</div>
+
+<div class="seat" onclick="sit(3)">
+🪑<br>
+<span id="s3" class="empty">EMPTY</span>
+</div>
+
+<br><br>
+
+<button onclick="backLobby()">BACK</button>
+
+</div>
 
 
 <script>
 
+let seats=[
+false,
+false,
+false,
+false
+];
 
-let roomBox=document.getElementById("roomBox");
 
+function openRoom(){
 
-for(let i=1;i<=10;i++){
+document.getElementById("lobby").classList.add("hidden");
 
-roomBox.innerHTML +=
-
-`
-<div class="box">
-
-ROOM ${i}
-
-<br>
-
-<button onclick="openRoom(${i})">
-ENTER
-</button>
-
-</div>
-`;
+document.getElementById("room").classList.remove("hidden");
 
 }
 
 
 
-function showRooms(){
+function sit(id){
 
-document.getElementById("lobby").style.display="none";
+if(seats[id]==false){
 
-document.getElementById("rooms").style.display="block";
+seats[id]=true;
 
-}
+document.getElementById("s"+id).innerHTML="👤 PLAYER";
 
-
-
-function openRoom(r){
-
-document.getElementById("rooms").style.display="none";
-
-document.getElementById("chairs").style.display="block";
-
-
-document.getElementById("roomTitle").innerHTML=
-"ROOM "+r;
-
-
-showChairs();
+document.getElementById("s"+id).className="online";
 
 }
 
+else{
 
-
-function showChairs(){
-
-let c=document.getElementById("chairBox");
-
-c.innerHTML="";
-
-
-for(let i=1;i<=4;i++){
-
-c.innerHTML +=
-
-`
-<div class="box">
-
-🪑 CHAIR ${i}
-
-<br>
-
-<button>
-SIT
-</button>
-
-</div>
-`;
+alert("ဒီခုံမှာ လူရှိပြီးသား");
 
 }
 
@@ -209,22 +172,13 @@ SIT
 
 
 
-function page(n){
+function backLobby(){
 
-alert("Page "+n+" / 4");
+document.getElementById("room").classList.add("hidden");
 
-}
-
-
-
-function backRoom(){
-
-document.getElementById("chairs").style.display="none";
-
-document.getElementById("rooms").style.display="block";
+document.getElementById("lobby").classList.remove("hidden");
 
 }
-
 
 </script>
 
