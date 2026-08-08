@@ -100,7 +100,7 @@ button:active{
     margin-bottom:5px;
 }
 
-/* EMPTY CHAIR */
+/* EMPTY */
 
 .empty-chair{
     padding:12px;
@@ -117,7 +117,7 @@ button:active{
     margin:5px;
 }
 
-/* OCCUPIED CHAIR */
+/* OCCUPIED */
 
 .occupied{
     min-height:220px;
@@ -146,7 +146,7 @@ button:active{
     padding:8px 15px;
 }
 
-/* PAGE BUTTONS */
+/* PAGE */
 
 .pages{
     margin:20px 5px;
@@ -167,12 +167,6 @@ button:active{
     margin-top:12px;
     background:#ffd900;
 }
-
-/* HIDDEN */
-
-.hidden{
-    display:none !important;
-}
 </style>
 </head>
 
@@ -183,9 +177,7 @@ button:active{
 </div>
 
 
-<!-- =========================
-     LOBBY
-========================= -->
+<!-- LOBBY -->
 
 <div id="lobby">
 
@@ -198,9 +190,7 @@ button:active{
 </div>
 
 
-<!-- =========================
-     ROOM PAGE
-========================= -->
+<!-- ROOM -->
 
 <div id="roomPage">
 
@@ -247,44 +237,21 @@ button:active{
 
 <script>
 
-/* =========================
-   GAME SETTINGS
-========================= */
-
 const ROOM_COUNT = 10;
+
 const CHAIRS_PER_PAGE = 4;
-const PAGE_COUNT = 4;
-
-
-/*
-    girl1.png / girl2.png / girl3.png / girl4.png
-
-    These files must be in the same folder
-    as index.html.
-*/
-
-
-/* =========================
-   GAME DATA
-========================= */
 
 let currentRoom = 1;
+
 let currentPage = 1;
 
 
-/*
-    Load saved chair data.
-    Every room has 16 chairs.
-*/
+/* SAVE / LOAD */
 
 let players = JSON.parse(
     localStorage.getItem("buffaloPlayers") || "{}"
 );
 
-
-/* =========================
-   SAVE DATA
-========================= */
 
 function savePlayers(){
 
@@ -296,9 +263,7 @@ function savePlayers(){
 }
 
 
-/* =========================
-   CREATE LOBBY
-========================= */
+/* LOBBY */
 
 function createLobby(){
 
@@ -325,19 +290,16 @@ function createLobby(){
         `;
 
         list.appendChild(box);
-
     }
-
 }
 
 
-/* =========================
-   OPEN ROOM
-========================= */
+/* OPEN ROOM */
 
 function openRoom(room){
 
     currentRoom = room;
+
     currentPage = 1;
 
     document.getElementById("lobby")
@@ -350,13 +312,10 @@ function openRoom(room){
         .textContent = "ROOM " + room;
 
     showChairs();
-
 }
 
 
-/* =========================
-   SHOW CHAIRS
-========================= */
+/* SHOW CHAIRS */
 
 function showChairs(){
 
@@ -365,18 +324,8 @@ function showChairs(){
 
     list.innerHTML = "";
 
-
-    /*
-        Each page contains 4 chairs.
-        Page 1 = chairs 1-4
-        Page 2 = chairs 5-8
-        Page 3 = chairs 9-12
-        Page 4 = chairs 13-16
-    */
-
     const start =
         (currentPage - 1) * CHAIRS_PER_PAGE + 1;
-
 
     for(
         let i=start;
@@ -385,15 +334,11 @@ function showChairs(){
     ){
 
         createChair(list,i);
-
     }
-
 }
 
 
-/* =========================
-   CREATE CHAIR
-========================= */
+/* CREATE CHAIR */
 
 function createChair(list,chairNumber){
 
@@ -403,10 +348,8 @@ function createChair(list,chairNumber){
         "_chair" +
         chairNumber;
 
-
     const data =
         players[key];
-
 
     const box =
         document.createElement("div");
@@ -414,9 +357,7 @@ function createChair(list,chairNumber){
     box.className = "chair";
 
 
-    /* =====================
-       EMPTY CHAIR
-    ===================== */
+    /* EMPTY */
 
     if(!data){
 
@@ -447,9 +388,7 @@ function createChair(list,chairNumber){
     }
 
 
-    /* =====================
-       OCCUPIED CHAIR
-    ===================== */
+    /* OCCUPIED */
 
     else{
 
@@ -457,7 +396,6 @@ function createChair(list,chairNumber){
 
         const girlNumber =
             ((chairNumber - 1) % 4) + 1;
-
 
         box.innerHTML = `
 
@@ -468,11 +406,11 @@ function createChair(list,chairNumber){
             <img
                 class="girl"
                 src="girl${girlNumber}.png"
-                alt="Player"
+                alt="3D Player"
             >
 
             <div class="player">
-                👤 PLAYER ${data.player}
+                👤 PLAYER
             </div>
 
             <div class="status">
@@ -487,32 +425,17 @@ function createChair(list,chairNumber){
             </button>
 
         `;
-
     }
 
-
     list.appendChild(box);
-
 }
 
 
-/* =========================
-   SIT
-========================= */
+/* SIT
+   NO NAME INPUT
+*/
 
 function sitChair(chairNumber){
-
-    const playerName =
-        prompt("Enter player name");
-
-
-    if(
-        playerName === null ||
-        playerName.trim() === ""
-    ){
-        return;
-    }
-
 
     const key =
         "room" +
@@ -521,14 +444,7 @@ function sitChair(chairNumber){
         chairNumber;
 
 
-    /*
-        If someone is already sitting,
-        don't replace them.
-    */
-
     if(players[key]){
-
-        alert("This chair is already occupied.");
 
         return;
     }
@@ -536,9 +452,9 @@ function sitChair(chairNumber){
 
     players[key] = {
 
-        player: playerName.trim(),
+        player:true,
 
-        time: Date.now()
+        time:Date.now()
 
     };
 
@@ -546,13 +462,10 @@ function sitChair(chairNumber){
     savePlayers();
 
     showChairs();
-
 }
 
 
-/* =========================
-   LEAVE
-========================= */
+/* LEAVE */
 
 function leaveChair(chairNumber){
 
@@ -568,26 +481,20 @@ function leaveChair(chairNumber){
     savePlayers();
 
     showChairs();
-
 }
 
 
-/* =========================
-   CHANGE PAGE
-========================= */
+/* PAGE */
 
 function changePage(page){
 
     currentPage = page;
 
     showChairs();
-
 }
 
 
-/* =========================
-   BACK TO LOBBY
-========================= */
+/* BACK */
 
 function backLobby(){
 
@@ -596,13 +503,10 @@ function backLobby(){
 
     document.getElementById("lobby")
         .style.display = "block";
-
 }
 
 
-/* =========================
-   START
-========================= */
+/* START */
 
 createLobby();
 
