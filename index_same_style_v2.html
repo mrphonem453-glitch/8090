@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>African Buffalo Lobby</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Arial,sans-serif;background:#090012;color:#fff}
+button{border:0;font-weight:900}
+:root{--gold:#ffd400;--purple:#9b00ff;--pink:#ff35d4;--dark:#160020}
+.topbar{height:48px;background:linear-gradient(#8d0000,#3b0000);border-bottom:2px solid #ffb900;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:18px;text-shadow:0 2px 3px #000}
+.app{height:calc(100% - 48px);position:relative}
+#lobby{height:100%;padding:10px 10px 20px;overflow:auto;background:
+radial-gradient(circle at 50% 20%,#68005f 0,#23002d 43%,#0b0012 100%)}
+.lobby-head{display:flex;align-items:center;justify-content:space-between;max-width:1050px;margin:0 auto 9px}
+.lobby-head h2{font-size:15px;margin:0;color:#fff}
+.room-count{font-size:11px;color:#ffe500}
+.rooms{max-width:1050px;margin:auto;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.card{height:185px;position:relative;border:2px solid var(--purple);border-radius:6px;overflow:hidden;background:#170020;box-shadow:0 0 10px #7900b8}
+.card img{width:100%;height:100%;object-fit:cover;display:block}
+.card:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 42%,rgba(7,0,12,.9))}
+.card .info{position:absolute;z-index:2;left:8px;right:8px;bottom:7px;display:flex;align-items:end;justify-content:space-between}
+.card .name{font-size:14px;color:#fff;text-shadow:0 2px 3px #000}
+.card .online{font-size:10px;color:#8dff00;margin-top:3px}
+.enter{padding:8px 13px;background:var(--gold);color:#220000;border-radius:5px;font-size:11px;box-shadow:0 2px 0 #9d7600}
+#room{display:none;height:100%;position:relative;overflow:hidden;background:
+radial-gradient(ellipse at 50% 38%,#a5007c 0,#4a005d 38%,#110018 76%)}
+#room:before{content:"";position:absolute;inset:0;background:
+radial-gradient(circle at 50% 90%,rgba(255,0,190,.4),transparent 36%),
+linear-gradient(90deg,rgba(0,0,0,.5),transparent 28%,transparent 72%,rgba(0,0,0,.55));pointer-events:none}
+.stage{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;padding:0 8px 18px}
+.stage-floor{position:absolute;left:0;right:0;bottom:0;height:34%;background:radial-gradient(ellipse at center,#b400a0 0,#5c006c 42%,transparent 73%);opacity:.9}
+.back-wall{position:absolute;top:48px;left:50%;transform:translateX(-50%);width:min(37vw,300px);height:270px;border:5px solid #9f00ff;border-radius:5px;overflow:hidden;box-shadow:0 0 18px #8c00ff}
+.back-wall img{width:100%;height:100%;object-fit:cover}
+.arc{position:absolute;top:-95px;left:50%;transform:translateX(-50%);width:650px;height:260px;border:28px solid rgba(55,0,90,.8);border-bottom:0;border-radius:50% 50% 0 0;box-shadow:inset 0 0 25px #250039}
+.header-room{position:absolute;z-index:10;top:7px;left:8px;right:8px;height:43px;display:flex;align-items:center;justify-content:space-between}
+.round{width:38px;height:38px;border-radius:50%;background:#27003c;border:2px solid var(--gold);color:var(--gold);font-size:27px}
+.room-title{text-align:center;font-size:14px;color:var(--gold);text-shadow:0 2px 4px #000}
+.room-title span{display:block;color:#fff;font-size:10px;margin-top:2px}
+.pagebox{position:absolute;z-index:12;right:7px;top:8px;width:126px;border:2px solid #d9a900;border-radius:7px;background:rgba(18,0,30,.92);box-shadow:0 0 10px #45005d;padding:4px}
+.page-caption{height:25px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;border-bottom:1px solid #7d5d00}
+.pages{max-height:78vh;overflow:auto}
+.pg{width:100%;height:34px;margin:2px 0;border:1px solid #d5a900;border-radius:5px;background:transparent;color:#fff;font-size:12px}
+.pg.active{background:#ffd400;color:#210000}
+.arrow-next{position:absolute;z-index:11;right:139px;top:48%;font-size:54px;color:#ffd400;text-shadow:0 0 8px #ff6b00;transform:translateY(-50%)}
+.arrow-back{position:absolute;z-index:11;left:10px;top:7px}
+.seats{position:relative;z-index:6;width:min(88vw,790px);margin-bottom:5px;display:grid;grid-template-columns:repeat(4,1fr);gap:9px;align-items:end}
+.slot{height:295px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.chair-back{position:absolute;bottom:52px;width:78px;height:137px;border-radius:42px 42px 18px 18px;background:linear-gradient(135deg,#d54be7,#69147d);border:3px solid #f064ff;box-shadow:0 0 8px #b100e8;z-index:-1}
+.chair-seat{width:92px;height:55px;border-radius:50%;background:linear-gradient(#e452e9,#741780);border:3px solid #ed64ff;box-shadow:0 9px 0 #3b0648}
+.girl{position:absolute;bottom:47px;width:130px;height:210px;object-fit:contain;object-position:bottom center;filter:drop-shadow(0 4px 5px #000);z-index:3}
+.player{position:relative;z-index:5;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:#9dff00;text-shadow:0 2px 3px #000;margin-bottom:3px}
+.sit{position:relative;z-index:6;margin-top:7px;background:var(--gold);color:#230000;border-radius:5px;padding:7px 18px;font-size:10px}
+.sit.leave{background:#e53535;color:#fff}
+.empty .girl,.empty .player{display:none}
+.bottom-info{position:absolute;z-index:10;left:8px;bottom:7px;color:#fff;font-size:10px;background:rgba(15,0,25,.75);border:1px solid #7d006e;padding:5px 8px;border-radius:5px}
+@media(min-width:700px){.rooms{grid-template-columns:repeat(4,1fr)}.card{height:235px}}
+@media(max-width:500px){.card{height:170px}.back-wall{width:165px;height:205px}.seats{width:96vw;gap:2px}.slot{height:235px}.chair-back{width:58px;height:105px}.chair-seat{width:68px;height:44px}.girl{width:93px;height:165px}.pagebox{width:102px}.arrow-next{right:112px;font-size:42px}}
+</style>
+</head>
+<body>
+<div class="topbar">🐃 AFRICAN BUFFALO</div>
+<div class="app">
+
+<section id="lobby">
+  <div class="lobby-head"><h2>ROOM LOBBY</h2><div class="room-count">10 ROOMS • 30 PAGES</div></div>
+  <div id="rooms" class="rooms"></div>
+</section>
+
+<section id="room">
+  <div class="header-room">
+    <button class="round arrow-back" onclick="backLobby()">‹</button>
+    <div class="room-title">AFRICAN BUFFALO <span id="roomSub">ROOM 1 • PAGE 1</span></div>
+  </div>
+  <div class="arc"></div>
+  <div class="back-wall"><img src="307.png"></div>
+  <div class="pagebox">
+    <div class="page-caption">PAGES 1–30</div>
+    <div id="pages" class="pages"></div>
+  </div>
+  <button class="arrow-next" onclick="nextPage()">»</button>
+  <div class="stage">
+    <div class="stage-floor"></div>
+    <div id="seats" class="seats"></div>
+  </div>
+  <div class="bottom-info">👤 <span id="nameLabel">Guest</span></div>
+</section>
+
+</div>
+<script>
+const ROOM_TOTAL=10,PAGE_TOTAL=30,PER_PAGE=4;
+let roomNo=1,pageNo=1;
+let name=localStorage.getItem('buffaloName')||'Guest';
+let seats=JSON.parse(localStorage.getItem('buffaloSeats')||'{}');
+const k=(r,c)=>`r${r}c${c}`;
+const img=i=>`girl${i}.png`;
+function save(){localStorage.setItem('buffaloSeats',JSON.stringify(seats))}
+function countRoom(r){let n=0;for(let i=1;i<=120;i++)if(seats[k(r,i)])n++;return n}
+function renderLobby(){
+  rooms.innerHTML='';
+  for(let r=1;r<=ROOM_TOTAL;r++)rooms.innerHTML+=`
+  <div class="card">
+    <img src="307.png">
+    <div class="info"><div><div class="name">ROOM ${r}</div><div class="online">● ${countRoom(r)}/120 ONLINE</div></div>
+    <button class="enter" onclick="openRoom(${r})">ENTER</button></div>
+  </div>`;
+}
+function renderPages(){
+  pages.innerHTML='';
+  for(let p=1;p<=PAGE_TOTAL;p++){
+    let n=0;for(let i=(p-1)*4+1;i<=p*4;i++)if(seats[k(roomNo,i)])n++;
+    pages.innerHTML+=`<button class="pg ${p===pageNo?'active':''}" onclick="goPage(${p})">${p} &nbsp; (${n}/4)</button>`;
+  }
+}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function renderSeats(){
+  seatsEl.innerHTML='';
+  const start=(pageNo-1)*4+1;
+  for(let j=0;j<4;j++){
+    const id=start+j,d=seats[k(roomNo,id)];
+    seatsEl.innerHTML+=`<div class="slot ${d?'':'empty'}">
+      <div class="chair-back"></div>
+      ${d?`<img class="girl" src="${img(j+1)}"><div class="player">👤 ${esc(d.name)}</div>`:''}
+      <div class="chair-seat"></div>
+      <button class="sit ${d?'leave':''}" onclick="${d?'leaveSeat':'sitSeat'}(${id})">${d?'LEAVE':'SIT'}</button>
+    </div>`;
+  }
+  roomSub.textContent=`ROOM ${roomNo} • PAGE ${pageNo}`;
+  nameLabel.textContent=name;
+}
+function openRoom(r){roomNo=r;pageNo=1;lobby.style.display='none';room.style.display='block';renderPages();renderSeats()}
+function backLobby(){room.style.display='none';lobby.style.display='block';renderLobby()}
+function goPage(p){pageNo=p;renderPages();renderSeats()}
+function nextPage(){goPage(pageNo===PAGE_TOTAL?1:pageNo+1)}
+function askName(){
+  const n=prompt('Player name:',name==='Guest'?'':name);
+  if(n&&n.trim()){name=n.trim().slice(0,20);localStorage.setItem('buffaloName',name);renderSeats()}
+}
+function sitSeat(id){
+  if(seats[k(roomNo,id)])return;
+  if(name==='Guest')askName();
+  if(name==='Guest')return;
+  seats[k(roomNo,id)]={name};
+  save();renderPages();renderSeats();
+}
+function leaveSeat(id){delete seats[k(roomNo,id)];save();renderPages();renderSeats()}
+const seatsEl=document.getElementById('seats');
+renderLobby();
+</script>
+</body>
+</html>
